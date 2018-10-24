@@ -101,6 +101,7 @@ async function capture(browser, url, img_name, res) {
     }
     const dom = await page.evaluate(async () => {
         let dom = {
+            document:document,
             height: document.body.scrollHeight,
             html: document.documentElement.outerHTML
         };
@@ -125,14 +126,24 @@ async function capture(browser, url, img_name, res) {
     console.log('滚动页面：' + _now() + '-----domHeight:' + dom.height)
     // await page.setViewport({width: config.width, height: dom.height});
     try {
-        await page.waitForSelector('img');
+        await page.evaluate(async () => {
+            let selectors = Array.from(document.querySelectorAll("img"));
+            await Promise.all(
+                selectors.map(img => {
+                    if (img.complete) return;
+                    return new Promise((resolve, reject) => {
+                        img.addEventListener("load", resolve);
+                        img.addEventListener("error", resolve);
+                    });
+                })
+            );
+            window.scroll(0, 0);
+        });
         console.log('图片加载完成：' + _now())
     } catch (err) {
-        console.error('图片加载错误***********************：' + _now())
+        console.error('图片加载错误***********************：' + _now(),err)
     }
-    await page.evaluate(async () => {
-        window.scroll(0, 0);
-    });
+
     await sleep(50)
     let documentJson = asyncParse(dom.html);//获取网页html
     try {
