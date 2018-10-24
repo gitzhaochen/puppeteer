@@ -75,7 +75,7 @@ async function screenShot(domHeight, page, img_name) {
         gm_res.write(`public/${img_name}.jpeg`, function (err) {
             //删除多余文件
             for (let i = 1; i <= imgLen; i++) {
-                fs.unlink(`./public/${img_name}-${i}.jpeg`, function(error) {
+                fs.unlink(`./public/${img_name}-${i}.jpeg`, function (error) {
                     if (error) throw error;
                 });
             }
@@ -93,10 +93,10 @@ async function capture(browser, url, img_name, res) {
     console.log('打开页面：' + _now())
     const page = await browser.newPage();
     await page.setViewport({width: config.width, height: config.height});
-    try{
+    try {
         await page.goto(url, {waitUntil: 'networkidle0'});
         console.log('打开页面完成：' + _now())
-    }catch(err){
+    } catch (err) {
         console.error('打开页面错误******************：' + _now())
     }
     const dom = await page.evaluate(async () => {
@@ -110,7 +110,8 @@ async function capture(browser, url, img_name, res) {
             let distance = 100
             let timer = setInterval(() => {
                 window.scrollBy(0, distance)
-                dom.height=document.body.scrollHeight
+                dom.height = document.body.scrollHeight
+                dom.html = document.documentElement.outerHTML
                 totalHeight += distance
                 if (totalHeight >= dom.height) {
                     clearInterval(timer)
@@ -133,12 +134,12 @@ async function capture(browser, url, img_name, res) {
         window.scroll(0, 0);
     });
     await sleep(50)
-    let documentJson=asyncParse(dom.html);//获取网页html
-    try{
+    let documentJson = asyncParse(dom.html);//获取网页html
+    try {
         await screenShot(dom.height, page, img_name)
-        res.json({img_name: `${img_name}.jpeg`,...documentJson});
-    }catch(err){
-        res.json({img_name: false,...documentJson});
+        res.json({img_name: `${img_name}.jpeg`, ...documentJson});
+    } catch (err) {
+        res.json({img_name: false, ...documentJson});
     }
 
     console.log('end：' + _now())
