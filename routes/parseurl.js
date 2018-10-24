@@ -94,7 +94,7 @@ async function capture(browser, url, img_name, res) {
     const page = await browser.newPage();
     await page.setViewport({width: config.width, height: config.height});
     try {
-        await page.goto(url, {waitUntil: 'networkidle0'});
+        await page.goto(url, {waitUntil: 'domcontentloaded'});
         console.log('打开页面完成：' + _now())
     } catch (err) {
         console.error('打开页面错误******************：' + _now())
