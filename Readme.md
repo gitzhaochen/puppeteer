@@ -1,8 +1,9 @@
 ## 动态网页抓取html及截图
+> 解决图片lazyload、页面内容超长、截图不完整问题
 
-> 1. puppteer网页截屏、[文档参考](https://pptr.dev/#?product=Puppeteer&version=v1.9.0&show=api-class-page)
-> 2. gm图片处理库、[文档参考](https://github.com/aheckmann/gm)
-> 3. mozilla readability网页主体抓取，[文档参考](https://github.com/mozilla/readability)
+1. puppteer网页截图工具、https://pptr.dev/#?product=Puppeteer&version=v1.9.0
+2. gm图片处理库、https://github.com/aheckmann/gm
+3. mozilla readability网页主体抓取算法，https://github.com/mozilla/readability
 
 ## useage
 
