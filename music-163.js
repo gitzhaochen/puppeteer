@@ -12,14 +12,20 @@ function saveHtml(html){
     })
 
 }
+
 (async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto('https://www.yuanben.io/article/5X1RRRHHMQ7MZS6QVZ706E0HSQ2UCLXWPR0L7LBPZU06FARMV5',{waitUntil:'networkidle0'});
-    await page.setViewport({width: 1920, height: 1080});
-    const dom = await page.evaluate(() => {
-        return {height: document.body.clientHeight,html:document.documentElement.outerHTML}
+    await page.goto('https://music.163.com',{waitUntil:'networkidle0'});
+    let iframeDom=''
+    const dom = await page.evaluate(async () => {
+        let iframe=document.getElementById('g_iframe').contentWindow;
+        iframeDom=iframe.document;
+        let dom= {height: iframeDom.body.scrollHeight,html:iframeDom.documentElement.outerHTML};
+        // await scrollPage(iframe)
+        return dom
     });
+    await page.setViewport({width: 1920, height: dom.height});
     console.log('dom高度:'+dom.height)
     await saveHtml(dom.html)
     await page.screenshot({path: "public/example.png", clip: {x: 0, y: 0, width: 1920, height: dom.height}});
