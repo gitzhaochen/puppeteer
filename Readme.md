@@ -1,10 +1,10 @@
 ## 动态网页抓取html及截图
 
-> 1. puppteer网页截屏、[文档](https://pptr.dev/#?product=Puppeteer&version=v1.9.0&show=api-class-page)
-> 2. gm图片处理库、[文档](https://github.com/aheckmann/gm)
-> 3. mozilla readability网页主体抓取，[文档](https://github.com/mozilla/readability)
+> 1. puppteer网页截屏、[文档参考](https://pptr.dev/#?product=Puppeteer&version=v1.9.0&show=api-class-page)
+> 2. gm图片处理库、[文档参考](https://github.com/aheckmann/gm)
+> 3. mozilla readability网页主体抓取，[文档参考](https://github.com/mozilla/readability)
 
-#### useage
+## useage
 
 - npm i 安装依赖
 - node server.js 跑express服务3333端口、监听请求
